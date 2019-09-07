@@ -4,4 +4,8 @@ use Test::Whitespaces {
         '/data/',
     ],
 
+    ignore => [
+        qr{^/data/ci/test_data/},
+    ],
+
 };
