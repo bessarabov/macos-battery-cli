@@ -18,7 +18,7 @@ jobs:
       run: docker pull perl:5.30.0
 
     - name: Build docker image
-      run: docker build . --tag tmp:${{ github.sha }}
+      run: cd ci/; docker build . --tag tmp:${{ github.sha }}
 
     - name: Run test in t/
-      run: docker run --rm --volume=`pwd`/lib/:/data/ tmp:${{ github.sha }} prove -l t/
+      run: docker run --rm --volume=`pwd`:/data/ tmp:${{ github.sha }}

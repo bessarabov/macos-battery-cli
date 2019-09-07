@@ -7,3 +7,5 @@ RUN cpanm --notest \
 COPY t/ /app/t/
 
 WORKDIR /app/
+
+CMD prove -l t/
