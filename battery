@@ -1,0 +1,54 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings FATAL => 'all';
+use feature 'say';
+use utf8;
+use open qw(:std :utf8);
+
+use Carp;
+use Term::ANSIColor qw(colored);
+
+sub parse_battery_info {
+    my ($info) = @_;
+
+    my $result = {};
+
+    if ( $info =~ /-InternalBattery-0 \(id=\d+\)\s(\d+)%;/ ) {
+        $result->{percent} = $1;
+    } else {
+        croak "Can't parse battery info:\n$info";
+    }
+
+    return $result;
+}
+
+sub output_info {
+    my ($parsed) = @_;
+
+    my $width = 25;
+
+    my $charged = int($parsed->{percent} * $width/100);
+
+    my $color = 'green';
+    $color = 'yellow' if $parsed->{percent} < 50;
+    $color = 'red' if $parsed->{percent} < 20;
+
+    say '';
+    say sprintf('%3d%%', $parsed->{percent}) . ' [' . colored('x'x$charged, $color) . '-'x($width-$charged) . ']';
+    say '';
+
+    return 1;
+}
+
+sub main {
+    my $info = `pmset -g batt`;
+
+    my $parsed = parse_battery_info($info);
+
+    output_info($parsed);
+
+    say $info;
+}
+main();
+__END__
