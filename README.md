@@ -7,7 +7,7 @@ A small console script to show battery info on macOS.
 ## Installation
 
 You only neen one file `battery` from this repo.
-Clone the repo and copy in into your $PATH:
+Clone the repo and copy it into your $PATH:
 
     $ git clone https://github.com/bessarabov/macos-battery-cli.git
     $ sudo cp macos-battery-cli/battery /usr/local/bin/
