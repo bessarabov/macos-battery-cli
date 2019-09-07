@@ -6,6 +6,7 @@ RUN cpanm --notest \
     ;
 
 COPY t/ /app/t/
+COPY test_data/ /app/test_data/
 
 WORKDIR /app/
 
