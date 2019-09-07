@@ -50,5 +50,6 @@ sub main {
 
     say $info;
 }
-main();
+main() if not caller;
+1;
 __END__
