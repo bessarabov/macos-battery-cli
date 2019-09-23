@@ -7,6 +7,7 @@ use utf8;
 use open qw(:std :utf8);
 
 use Carp;
+use JSON::PP;
 use Term::ANSIColor qw(colored);
 
 sub parse_battery_info {
@@ -14,11 +15,29 @@ sub parse_battery_info {
 
     my $result = {};
 
-    if ( $info =~ /-InternalBattery-0 \(id=\d+\)\s(\d+)%;/ ) {
-        $result->{percent} = $1;
+    if ( $info =~
+    m/
+        -InternalBattery-0
+        \s+
+        \(id=\d+\)
+        \s+
+        (\d+)%;
+        \s+
+        (charging|discharging)
+    /x ) {
+        $result = {
+            parsed => JSON::PP::true,
+            percent => $1,
+            status => $2,
+        };
     } else {
-        croak "Can't parse battery info:\n$info";
+        $result = {
+            parsed => JSON::PP::false,
+        };
     }
+
+    $result->{raw} = $info;
+    $result->{timestamp} = time();
 
     return $result;
 }
@@ -42,13 +61,21 @@ sub output_info {
 }
 
 sub main {
-    my $info = `pmset -g batt`;
 
+    my $info = `pmset -g batt`;
     my $parsed = parse_battery_info($info);
 
-    output_info($parsed);
+    if (($ARGV[0] // '') eq '--json') {
+        say encode_json $parsed;
+    } else {
 
-    say $info;
+        croak "Can't parse battery info:\n$parsed->{raw}" if not $parsed->{parsed};
+
+        output_info($parsed);
+
+        say $info;
+    }
+
 }
 main() if not caller;
 1;
