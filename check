@@ -1,0 +1,2 @@
+cd ci/; docker build --tag macos-battery-cli .; cd ..
+docker run --rm --volume=`pwd`:/data/ macos-battery-cli
