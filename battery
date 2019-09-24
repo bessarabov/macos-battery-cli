@@ -23,7 +23,7 @@ sub parse_battery_info {
         \s+
         (\d+)%;
         \s+
-        (charging|discharging)
+        (charging|discharging|charged)
     /x ) {
         $result = {
             parsed => JSON::PP::true,
