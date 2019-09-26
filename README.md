@@ -2,7 +2,7 @@
 
 A small console script to show battery info on macOS.
 
-![Screencast](https://upload.bessarabov.ru/bessarabov/6ogFiNXfJVpZn1d_2XvRGobV0Yg.png)
+![Screenshot](https://upload.bessarabov.ru/bessarabov/6ogFiNXfJVpZn1d_2XvRGobV0Yg.png)
 
 ## Installation
 
@@ -15,3 +15,9 @@ Clone the repo and copy it into your $PATH:
 ## Usage
 
 Just run `battery` in the command line.
+
+
+## Presentation
+
+There is a short video on YouTube that explains why this script was created and
+how it can be used [ https://www.youtube.com/watch?v=h17ADOfF_lc](https://www.youtube.com/watch?v=h17ADOfF_lc)
